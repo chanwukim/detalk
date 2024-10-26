@@ -1,0 +1,10 @@
+node_modules
+.next
+.husky
+coverage
+.prettierignore
+stories
+storybook-static
+*.log
+playwright-report
+docs
