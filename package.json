@@ -16,7 +16,9 @@
   },
   "packageManager": "pnpm@9.9.0",
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
     "clsx": "^2.1.1",
+    "cva": "npm:class-variance-authority@^0.7.1",
     "next": "15.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
