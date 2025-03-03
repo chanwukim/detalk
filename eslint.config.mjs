@@ -15,7 +15,7 @@ const eslintConfig = [
   },
   ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
   {
-    files: ["src/*.{js,jsx,ts,tsx}"],
+    files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
       parserOptions: {
         projectService: true,
@@ -32,10 +32,6 @@ const eslintConfig = [
           fixStyle: "inline-type-imports",
         },
       ],
-      /**
-       * https://typescript-eslint.io/rules/strict-boolean-expressions/
-       */
-      "@typescript-eslint/strict-boolean-expressions": "error",
       "import/order": [
         "error",
         {
