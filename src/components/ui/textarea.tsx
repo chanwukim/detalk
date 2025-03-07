@@ -4,7 +4,7 @@ import cn from "@/libs/cn";
 
 export type TextareaProps = React.ComponentProps<"textarea">;
 
-export default function Textarea({ className, ...rest }: TextareaProps) {
+export function Textarea({ className, ...rest }: TextareaProps) {
   return (
     <textarea
       className={cn(
