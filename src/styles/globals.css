@@ -31,6 +31,7 @@
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(240 4.9% 83.9%);
 
+  --z-sticky: 900;
   --z-overlay: 1000;
   --z-overlay-backdrop: 999;
 }
