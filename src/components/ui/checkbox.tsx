@@ -8,17 +8,68 @@ export type CheckboxGroupProps = React.ComponentProps<"div">;
 /**
  * @example
  * <CheckboxGroup>
- *  <CheckboxField>
- *    <Checkbox id="terms" />
- *    <Label htmlFor="terms">Checkbox</Label>
- *    <p>Description</p>
- *  </CheckboxField>
- *  <CheckboxField>
- *    <Checkbox id="policy" />
- *    <Label htmlFor="policy">Checkbox</Label>
- *    <p>Description</p>
- *  </CheckboxField>
+ *   <CheckboxField>
+ *     <Checkbox id="terms" />
+ *     <Label htmlFor="terms">Checkbox</Label>
+ *     <p>Description</p>
+ *   </CheckboxField>
+ *   <CheckboxField>
+ *     <Checkbox id="policy" />
+ *     <Label htmlFor="policy">Checkbox</Label>
+ *     <p>Description</p>
+ *   </CheckboxField>
  * </CheckboxGroup>
+ *
+ * @example <caption>with Form</caption>
+ * <FormField
+ *   control={form.control}
+ *   name="items"
+ *   render={() => (
+ *     <FormItem>
+ *       <FormLabel>Items</FormLabel>
+ *
+ *       <CheckboxGroup className="mt-4">
+ *         {items.map((item) => (
+ *           <FormField
+ *             key={item.id}
+ *             control={form.control}
+ *             name="items"
+ *             render={({ field }) => (
+ *               <FormItem key={item.id}>
+ *                 <FormControl>
+ *                   <CheckboxField>
+ *                     <Checkbox
+ *                       id={item.id}
+ *                       checked={field.value?.includes(item.id)}
+ *                       onCheckedChange={(checked) => {
+ *                         return checked
+ *                           ? field.onChange([
+ *                               ...field.value,
+ *                               item.id,
+ *                             ])
+ *                           : field.onChange(
+ *                               field.value?.filter(
+ *                                 (value) => value !== item.id,
+ *                               ),
+ *                             );
+ *                       }}
+ *                     />
+ *                     <FormLabel htmlFor={item.id}>
+ *                       {item.label}
+ *                     </FormLabel>
+ *                     <FormDescription>
+ *                       {item.description}
+ *                     </FormDescription>
+ *                   </CheckboxField>
+ *                 </FormControl>
+ *               </FormItem>
+ *             )}
+ *           />
+ *         ))}
+ *       </CheckboxGroup>
+ *     </FormItem>
+ *   )}
+ * />
  */
 export function CheckboxGroup({ className, ...rest }: CheckboxGroupProps) {
   return <div className={cn("grid gap-4", className)} {...rest} />;
