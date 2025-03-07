@@ -43,7 +43,7 @@ type SidebarContextValue = {
 
 const [SidebarBaseProvider, useSidebar] =
   createSafeContext<SidebarContextValue>(
-    "useSidebar must be used within a <SidebarProvider",
+    "useSidebar must be used within a <SidebarProvider/>",
   );
 
 export { useSidebar };
