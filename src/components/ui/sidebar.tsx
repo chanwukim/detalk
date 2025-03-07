@@ -48,11 +48,11 @@ const [SidebarBaseProvider, useSidebar] =
 
 export { useSidebar };
 
-export interface SidebarProps extends React.ComponentProps<"div"> {
+export type SidebarProviderProps = React.ComponentProps<"div"> & {
   defaultOpen?: boolean;
   isOpen?: boolean;
   onOpenChange?: (isOpen: boolean) => void;
-}
+};
 export function SidebarProvider({
   defaultOpen = true,
   isOpen: openProp,
@@ -62,7 +62,7 @@ export function SidebarProvider({
   style,
   className,
   ...rest
-}: SidebarProps) {
+}: SidebarProviderProps) {
   const { isMobile } = useResponsive();
   const [openMobile, setOpenMobile] = React.useState(false);
 
@@ -148,11 +148,11 @@ export function SidebarProvider({
   );
 }
 
-export interface SidebarProps extends React.ComponentProps<"div"> {
+export type SidebarProps = React.ComponentProps<"div"> & {
   side?: "left" | "right";
   variant?: "sidebar" | "floating" | "inset";
   collapsible?: "offcanvas" | "icon" | "none";
-}
+};
 export function Sidebar({
   side = "left",
   variant = "sidebar",
