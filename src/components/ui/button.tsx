@@ -1,6 +1,6 @@
 "use client";
 
-import { Slot } from "@radix-ui/react-slot";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "cva";
 
 import cn from "@/libs/cn";
@@ -20,21 +20,28 @@ export function Button({
   asChild,
   children,
   className,
+  onClick,
   ...rest
 }: ButtonProps) {
-  const Component = (asChild ?? false) ? Slot : "button";
+  const Component = asChild ? Slot : "button";
 
   return (
     <Component
       aria-busy={isLoading}
       data-loading={isLoading}
       className={cn(buttonVariants({ variant, size, className }))}
+      onClick={(e) => {
+        if (isLoading) {
+          return;
+        }
+        onClick?.(e);
+      }}
       {...rest}
     >
-      {children}
       {isLoading && (
         <LoadingIcon className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin" />
       )}
+      <Slottable>{children}</Slottable>
     </Component>
   );
 }
