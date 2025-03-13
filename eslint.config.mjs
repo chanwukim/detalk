@@ -11,7 +11,14 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    ignores: ["node_modules", "public", ".next", "build"],
+    ignores: [
+      "node_modules",
+      "public",
+      ".next",
+      "build",
+      "package-lock.yaml",
+      "pnpm-lock.yaml",
+    ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
   {
