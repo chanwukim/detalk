@@ -1,3 +1,5 @@
+import { ApiProvider } from "@/libs/api";
+
 export default function Providers({ children }: React.PropsWithChildren) {
-  return <>{children}</>;
+  return <ApiProvider>{children}</ApiProvider>;
 }
