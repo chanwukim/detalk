@@ -30,6 +30,13 @@ const eslintConfig = [
       },
     },
     rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
       /**
        * https://typescript-eslint.io/rules/consistent-type-imports
        */
