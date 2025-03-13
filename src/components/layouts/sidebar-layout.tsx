@@ -28,7 +28,7 @@ function BaseSidebarLayout({
   children,
   className,
 }: SidebarLayoutProps) {
-  const { isOpen, setIsOpenMobile, toggleSidebar } = useSidebar();
+  const { setIsOpenMobile, toggleSidebar } = useSidebar();
 
   function handleClose() {
     setIsOpenMobile(false);
@@ -61,9 +61,7 @@ function BaseSidebarLayout({
 
       {sidebar}
 
-      <div
-        className={cn("hidden h-full px-1 py-2.5 md:block", !isOpen && "pl-2")}
-      >
+      <div className={cn("hidden h-full px-2 py-2.5 md:block")}>
         <SidebarTrigger className="sticky top-2.5" />
       </div>
 
