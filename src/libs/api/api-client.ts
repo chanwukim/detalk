@@ -131,6 +131,8 @@ export class ApiClient {
   }
 }
 
+const baseUrl = clientEnv.baseUrl ?? "http://localhost:3000";
+
 export const apiClient = new ApiClient({
-  baseUrl: `${clientEnv.baseUrl}/api`,
+  baseUrl: `${baseUrl}/api`,
 });
