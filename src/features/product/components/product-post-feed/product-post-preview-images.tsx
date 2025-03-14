@@ -1,6 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
+
+import paths from "@/config/paths";
 
 import {
   Carousel,
@@ -8,23 +11,17 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "../ui/carousel";
+} from "@/components/ui/carousel";
 import {
   Overlay,
   OverlayContent,
   OverlayDescription,
   OverlayTitle,
-} from "../ui/overlay";
+} from "@/components/ui/overlay";
 
-type PreviewImagesProps = {
-  postTitle: string;
-  imageUrls: string[];
-};
+import { useProductPostFeed } from "./product-post-feed";
 
-export default function ProductPostPreviewImages({
-  postTitle,
-  imageUrls: initialImageUrls = [],
-}: PreviewImagesProps) {
+export default function ProductPostPreviewImages() {
   // images
   type PreviewImage = {
     url: string;
@@ -37,6 +34,8 @@ export default function ProductPostPreviewImages({
 
   const [images, setImages] = useState<PreviewImage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { productPost, isNavigable } = useProductPostFeed();
 
   // modal
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -60,9 +59,9 @@ export default function ProductPostPreviewImages({
       const MAX_HEIGHT = 300;
       const MAX_WIDTH = 400;
 
-      initialImageUrls.forEach((imageUrl) => {
+      productPost.media.forEach(({ url }) => {
         const image: HTMLImageElement = new Image();
-        image.src = imageUrl;
+        image.src = url;
 
         image.onload = () => {
           const aspectRatio = image.width / image.height;
@@ -70,7 +69,7 @@ export default function ProductPostPreviewImages({
           const renderHeight = renderWidth / aspectRatio;
 
           loadedImages.push({
-            url: imageUrl,
+            url,
             width: image.width,
             height: image.height,
             aspectRatio,
@@ -79,7 +78,7 @@ export default function ProductPostPreviewImages({
           });
 
           loadedCount++;
-          if (loadedCount === initialImageUrls.length) {
+          if (loadedCount === productPost.media.length) {
             setImages(loadedImages);
             setIsLoading(false);
           }
@@ -94,17 +93,17 @@ export default function ProductPostPreviewImages({
       setImages([]);
       setIsLoading(true);
     };
-  }, [initialImageUrls]);
+  }, [productPost.media]);
 
-  if (initialImageUrls.length < 1) {
+  if (productPost.media.length < 1) {
     return null;
   }
 
   if (isLoading) {
     return (
-      <Carousel className="bg-muted z-10 mt-2">
+      <Carousel className="z-10 mt-2">
         <CarouselContent className="-ml-4">
-          <div aria-busy className="bg-muted h-76 w-full"></div>
+          <div aria-busy className="h-76 w-full"></div>
         </CarouselContent>
         <CarouselNext className="-right-0" />
         <CarouselPrevious className="-left-0" />
@@ -125,16 +124,19 @@ export default function ProductPostPreviewImages({
         }}
       >
         <OverlayContent
-          className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[45%] left-[50%] w-full max-w-[90vw] -translate-x-1/2 -translate-y-1/2 shadow-lg duration-200 outline-none"
+          className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[45%] left-[50%] -translate-x-1/2 -translate-y-1/2 shadow-lg duration-200 outline-none"
           onClick={handleCloseImage}
         >
-          <OverlayTitle className="sr-only">{postTitle} Image</OverlayTitle>
+          <OverlayTitle className="sr-only">
+            {productPost.title} Image
+          </OverlayTitle>
           <OverlayDescription className="sr-only">
-            This is a image of {postTitle}
+            This is a image of {productPost.title}
           </OverlayDescription>
           <img
-            alt={`Image of ${postTitle}`}
+            alt={`Image of ${productPost.title}`}
             src={images[currentImageIndex].url}
+            className="max-h-[80vh] max-w-[90vw] object-contain"
           />
         </OverlayContent>
       </Overlay>
@@ -144,21 +146,35 @@ export default function ProductPostPreviewImages({
           {images.map((image, index) => (
             <CarouselItem
               key={`${image.url}-${index}`}
-              className="pl-4"
+              className="z-10 pl-4"
               style={{ flex: `0 0 ${image.renderWidth + 16}px` }}
             >
               <img
-                alt={`Image of ${postTitle}`}
+                alt={`Image of ${productPost.title}`}
                 src={image.url}
-                className="h-76 rounded-2xl border object-cover"
+                className="h-76 cursor-pointer rounded-xl border object-cover"
                 style={{ width: `${image.renderWidth}px` }}
                 onClick={() => handleClickImage(index)}
               />
             </CarouselItem>
           ))}
+          {isNavigable && (
+            <Link
+              href={paths.product.post.detail.getHref(
+                productPost.id.toString(),
+              )}
+              className="absolute inset-0 z-0"
+            >
+              <span className="sr-only">View Post</span>
+            </Link>
+          )}
         </CarouselContent>
-        <CarouselNext className="-right-0" />
-        <CarouselPrevious className="-left-0" />
+        {images.length > 1 && (
+          <>
+            <CarouselNext className="-right-0" />
+            <CarouselPrevious className="-left-0" />
+          </>
+        )}
       </Carousel>
     </>
   );

@@ -7,12 +7,14 @@ const paths = {
       getHref: () => "/sign-in",
     },
   },
-  posts: {
-    new: {
-      getHref: () => "/posts/new",
-    },
-    detail: {
-      getHref: (id: string) => `/posts/${id}`,
+  product: {
+    post: {
+      new: {
+        getHref: () => "/posts/new",
+      },
+      detail: {
+        getHref: (id: string) => `/posts/${id}`,
+      },
     },
   },
   member: {

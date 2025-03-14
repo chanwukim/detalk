@@ -72,6 +72,16 @@ const eslintConfig = [
               position: "before",
             },
             {
+              pattern: "@/config/**/*",
+              group: "internal",
+              position: "after",
+            },
+            {
+              pattern: "@/features/**/*",
+              group: "internal",
+              position: "after",
+            },
+            {
               pattern: "@/libs/**/*",
               group: "internal",
               position: "after",

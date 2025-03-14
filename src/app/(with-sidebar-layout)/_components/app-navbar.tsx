@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import paths from "@/config/paths";
 
-import Logo from "@/components/logo";
+import Logo from "@/components/common/logo";
 import { Button } from "@/components/ui/button";
 import { Navbar, NavbarSection, NavbarSpacer } from "@/components/ui/navbar";
 

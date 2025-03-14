@@ -1,16 +1,38 @@
 "use client";
 
 import cn from "@/libs/cn";
+import createSafeContext from "@/libs/create-safe-context";
+
+import { type ProductPost } from "../../product.dto";
+
+type ProductPostFeedContextValue = {
+  productPost: ProductPost;
+  isNavigable: boolean;
+};
+
+const [ProductPostFeedProvider, useProductPostFeed] =
+  createSafeContext<ProductPostFeedContextValue>(
+    "use ProductPostFeedContext must be used within a ProductPostFeedProvider",
+  );
+
+export { useProductPostFeed };
 
 export function ProductPostFeed({
+  productPost,
+  isNavigable,
   children,
   className,
   ...rest
-}: React.ComponentProps<"article">) {
+}: React.ComponentProps<"article"> & {
+  productPost: ProductPost;
+  isNavigable: boolean;
+}) {
   return (
-    <article className={cn("relative border-b", className)} {...rest}>
-      {children}
-    </article>
+    <ProductPostFeedProvider value={{ productPost, isNavigable }}>
+      <article className={cn("relative border-b", className)} {...rest}>
+        {children}
+      </article>
+    </ProductPostFeedProvider>
   );
 }
 
