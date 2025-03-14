@@ -2,7 +2,6 @@ import clientEnv from "@/config/client-env";
 
 import { ApiError } from "./errors";
 
-
 type Primitive = string | number | boolean | undefined | null;
 type QueryString = Record<string, Primitive | Primitive[]>;
 
