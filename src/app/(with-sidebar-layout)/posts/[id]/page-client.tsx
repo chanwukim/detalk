@@ -20,23 +20,83 @@ import {
   ProductPostFeedVoteButton,
 } from "@/features/product/components/product-post-feed";
 
+import { ApiError } from "@/libs/api";
 import { formatRelativeTime } from "@/libs/utils";
 
 import LoggingErrorBoundary from "@/components/common/logging-error-boundary";
+import LoadingIcon from "@/components/icons/loading-icon";
 import ShareIcon from "@/components/icons/share-icon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  EmptyState,
+  EmptyIcon,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyAction,
+} from "@/components/ui/empty-state";
+import {
+  ErrorState,
+  ErrorIcon,
+  ErrorTitle,
+  ErrorDescription,
+  ErrorAction,
+} from "@/components/ui/error-state";
 
 export default function PostDetailPageClient() {
   return (
     <div className="flex h-full flex-col">
-      <LoggingErrorBoundary fallback={() => <div>TODO Error State</div>}>
-        <Suspense fallback={<div>TODO Loading State</div>}>
+      <LoggingErrorBoundary fallback={ProductPostDetailErrorState}>
+        <Suspense
+          fallback={
+            <div className="flex flex-1 items-center justify-center">
+              <LoadingIcon className="text-primary size-8 animate-spin" />
+            </div>
+          }
+        >
           <ProductPostDetail />
         </Suspense>
       </LoggingErrorBoundary>
     </div>
+  );
+}
+
+function ProductPostDetailErrorState({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
+  if (error instanceof ApiError && error.code === "product_post_not_found") {
+    return (
+      <EmptyState>
+        <EmptyIcon />
+        <EmptyTitle>Post not found</EmptyTitle>
+        <EmptyDescription>
+          The post you are looking for does not exist.
+        </EmptyDescription>
+        <EmptyAction>
+          <Button variant="outline" asChild>
+            <Link href={paths.home.getHref()}>Go to home</Link>
+          </Button>
+        </EmptyAction>
+      </EmptyState>
+    );
+  }
+
+  return (
+    <ErrorState>
+      <ErrorIcon />
+      <ErrorTitle>Something went wrong</ErrorTitle>
+      <ErrorDescription>Please try again later.</ErrorDescription>
+      <ErrorAction>
+        <Button variant="outline" onClick={reset}>
+          Retry
+        </Button>
+      </ErrorAction>
+    </ErrorState>
   );
 }
 

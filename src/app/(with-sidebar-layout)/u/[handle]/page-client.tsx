@@ -7,6 +7,7 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import paths from "@/config/paths";
 
 import { memberQueryOptions } from "@/features/member";
+import ProductPostFeedSkeleton from "@/features/product/components/product-post-feed-skeleton";
 import ProductPostFeeds from "@/features/product/components/product-post-feeds";
 
 import LoggingErrorBoundary from "@/components/common/logging-error-boundary";
@@ -19,6 +20,12 @@ import {
   DropdownContent,
   DropdownItem,
 } from "@/components/ui/dropdown";
+import {
+  ErrorState,
+  ErrorIcon,
+  ErrorTitle,
+  ErrorDescription,
+} from "@/components/ui/error-state";
 import {
   TabNavigation,
   TabNavigationLink,
@@ -75,13 +82,23 @@ export default function ProfilePageClient() {
       </TabNavigation>
       <section>
         <h2 className="sr-only">Posts</h2>
-        <LoggingErrorBoundary fallback={() => <div>TODO Error State</div>}>
-          <Suspense fallback={<div>TODO Loading State</div>}>
+        <LoggingErrorBoundary fallback={ProductPostFeedsErrorState}>
+          <Suspense fallback={<ProductPostFeedSkeleton length={20} />}>
             <InfiniteProductPostFeeds />
           </Suspense>
         </LoggingErrorBoundary>
       </section>
     </>
+  );
+}
+
+function ProductPostFeedsErrorState() {
+  return (
+    <ErrorState>
+      <ErrorIcon />
+      <ErrorTitle>Something went wrong</ErrorTitle>
+      <ErrorDescription>Please try again later.</ErrorDescription>
+    </ErrorState>
   );
 }
 
