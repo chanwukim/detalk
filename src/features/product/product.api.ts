@@ -15,6 +15,8 @@ const productApi = {
           query: params,
         },
       ),
+    getDetail: (id: string) =>
+      apiClient.get<ProductPost>(`/v1/products/posts/${id}`),
   },
 };
 
