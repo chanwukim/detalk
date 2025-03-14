@@ -18,6 +18,6 @@ const productApi = {
     getDetail: (id: string) =>
       apiClient.get<ProductPost>(`/v1/products/posts/${id}`),
   },
-};
+} as const;
 
 export default productApi;
