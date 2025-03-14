@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 
 import paths from "@/config/paths";
 
+import Logo from "@/components/common/logo";
 import HomeFillIcon from "@/components/icons/home-fill-icon";
 import HomeIcon from "@/components/icons/home-icon";
 import PlusIcon from "@/components/icons/plus-icon";
 import UserCircleFillIcon from "@/components/icons/user-circle-fill-icon";
 import UserCircleIcon from "@/components/icons/user-circle-icon";
-import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import {
   Sidebar,
@@ -69,8 +69,8 @@ export default function AppSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton size="lg" asChild>
-                  <Link href={paths.posts.new.getHref()}>
-                    {isActive(paths.posts.new.getHref()) ? (
+                  <Link href={paths.product.post.new.getHref()}>
+                    {isActive(paths.product.post.new.getHref()) ? (
                       <PlusIcon />
                     ) : (
                       <PlusIcon />

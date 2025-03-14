@@ -2,8 +2,7 @@ import Link from "next/link";
 
 import paths from "@/config/paths";
 
-import Logo from "@/components/logo";
-
+import Logo from "@/components/common/logo";
 
 export default function AuthLayout({ children }: React.PropsWithChildren) {
   return (
