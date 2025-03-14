@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 
 import { type ProductPost } from "../product.dto";
 
+import PricingPlanBadge from "./pricing-plan-badge";
 import { ProductPostFeedVoteButton } from "./product-post-feed";
 import {
   ProductPostFeed,
@@ -82,9 +83,7 @@ export default function ProductPostFeeds({
             </Link>
 
             <div className="mt-2 flex flex-wrap items-center gap-1">
-              <Badge color="green" className="rounded-full px-3 py-1">
-                Free
-              </Badge>
+              <PricingPlanBadge plan={post.pricingPlan} />
               {post.tags.map((tag) => (
                 <Badge
                   key={tag}

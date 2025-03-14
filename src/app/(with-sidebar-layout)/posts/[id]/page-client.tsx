@@ -9,6 +9,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import paths from "@/config/paths";
 
 import { productPostQueryOptions } from "@/features/product";
+import PricingPlanBadge from "@/features/product/components/pricing-plan-badge";
 import {
   ProductPostFeed,
   ProductPostFeedHeader,
@@ -88,9 +89,7 @@ function ProductPostDetail() {
         <p className="mt-2 line-clamp-3 text-sm">{post.description}</p>
 
         <div className="mt-4 flex flex-wrap items-center gap-1">
-          <Badge color="green" className="rounded-full px-3 py-1">
-            Free
-          </Badge>
+          <PricingPlanBadge plan={post.pricingPlan} />
           {post.tags.map((tag) => (
             <Badge key={tag} color="zinc" className="rounded-full px-3 py-1">
               {tag}
