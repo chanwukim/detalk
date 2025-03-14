@@ -12,7 +12,7 @@ export default function WithSidebarLayout({
       navbar={<AppNavbar />}
       sidebar={<AppSidebar />}
     >
-      <div className="bg-background h-full w-full max-w-6xl md:mx-auto md:overflow-hidden md:rounded-lg md:border md:shadow-xs">
+      <div className="bg-background h-full w-full md:mx-auto md:max-w-2xl md:overflow-hidden md:rounded-lg md:border md:shadow-xs">
         {children}
       </div>
     </SidebarLayout>
